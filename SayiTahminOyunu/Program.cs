@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SayiTahminOyunu
+namespace sayitahmineray
 {
     internal class Program
     {
@@ -14,8 +14,8 @@ namespace SayiTahminOyunu
 
             while (true)
             {
-                int altSinir, ustSinir, hedefSayi, tahmin, kalanDeneme, skor, skormod;
-                string zorluk, tekrar;
+                int altSinir, ustSinir, hedefSayi, tahmin, kalanDeneme, skor=0, skormod ;
+                string zorluk,tekrar;
 
                 Console.Write(
                     "Seviyesini seçiniz:\n" +
@@ -35,25 +35,37 @@ namespace SayiTahminOyunu
                 {
                     case "K":
                         altSinir = 1;
-                        ustSinir = 10;
-                        kalanDeneme = 7;
+                        ustSinir = 15;
+                        kalanDeneme = 8;
                         skormod = 10;
+                        Console.WriteLine(
+                            "Kolay Moda Hoşgeldiniz.\n"+
+                            "Bu modda En fazla 80 puan kazanabilirsiniz.");
                         break;
                     case "O":
                         altSinir = 1;
                         ustSinir = 50;
-                        kalanDeneme = 6;
+                        kalanDeneme = 7;
                         skormod = 20;
+                        Console.WriteLine(
+                               "Orta Moda Hoşgeldiniz.\n" +
+                               "Bu modda En fazla 140 puan kazanabilirsiniz.");
                         break;
                     case "Z":
                         altSinir = 1;
                         ustSinir = 100;
-                        kalanDeneme = 5;
+                        kalanDeneme = 6;
                         skormod = 30;
+                        Console.WriteLine(
+                             "Zor Moda Hoşgeldiniz.\n" +
+                             "Bu modda En fazla 180 puan kazanabilirsiniz.");
                         break;
 
                     default:
                         Console.WriteLine("Geçersiz seviye seçimi. Varsayılan olarak Kolay seviyesi seçildi.");
+                        Console.WriteLine(
+                           "Kolay Moda Hoşgeldiniz.\n" +
+                           "Bu modda En fazla 80 puan kazanabilirsiniz.");
                         altSinir = 1;
                         ustSinir = 10;
                         kalanDeneme = 7;
@@ -62,8 +74,8 @@ namespace SayiTahminOyunu
                 }
 
                 Random eray = new Random();
-                hedefSayi = eray.Next(altSinir, ustSinir + 1);
-                skor = 100;
+                hedefSayi = eray.Next(altSinir, ustSinir+1);//0-100 arasında 100 üde dahil etsin diye +1 koyuyorum
+               
 
 
                 while (kalanDeneme > 0)
@@ -79,40 +91,43 @@ namespace SayiTahminOyunu
                         continue;
                     }
 
-                    else if (tahmin < hedefSayi)
+                    if (tahmin < hedefSayi)
                     {
-                        Console.WriteLine("Girdiğiniz Sayı Çok düşük.Kalan hakkın:" + " " + (--kalanDeneme));
+                        Console.WriteLine("Girdiğiniz Sayı düşük.Kalan hakkın:" +" "+ (--kalanDeneme));
                     }
                     else if (tahmin > hedefSayi)
                     {
-                        Console.WriteLine("Girdiğiniz Sayı Çok Yüksek.Kalan hakkın:" + " " + (--kalanDeneme));
+                        Console.WriteLine("Girdiğiniz Sayı yüksek.Kalan hakkın:"+" " + (--kalanDeneme));
                     }
 
-                    else if (tahmin == hedefSayi)
+                if(kalanDeneme==1)
                     {
+                        Console.WriteLine("Dikkat Son Denemeniz!!");
+                    }
+                    else if (kalanDeneme==0)
+                    {
+                        Console.WriteLine("Üzgünüm, doğru tahmin edemediniz. Bir sonraki sefer daha iyisini yapabilirsiniz.");
+                    }
 
+                    if (tahmin == hedefSayi)
+                    {
+                        
                         Console.WriteLine("Tebrikler! Doğru tahmin ettiniz.");
 
-                        skor = skor + kalanDeneme * skormod;
+                        skor = kalanDeneme * skormod;
                         break;
                     }
-
                 }
-
                 Console.WriteLine("Oyun bitti. Skorunuz: " + skor);
 
-
-
                 Console.Write("Tekrar oynamak için (T) tuşuna basın, çıkmak için herhangi bir tuşa basın: ");
-                tekrar = Console.ReadLine().ToUpper();
+                 tekrar= Console.ReadLine().ToUpper();
                 if (tekrar == "T")
                 {
                     continue;
                 }
                 else
                     break;
-
-
                 // seviye 1-2-3 kolay orta zor
                 //hak
                 //puan// 100 puan olucak bilemedikçe 100 den geri düşücek seviye sistemiine entegre et
@@ -122,4 +137,5 @@ namespace SayiTahminOyunu
         }
     }
 }
+
 
